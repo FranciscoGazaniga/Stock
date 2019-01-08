@@ -1,37 +1,37 @@
-//ProgramaÁ„o referente ao estoque de uma Estoque.
+//Programa√ß√£o referente √† um estoque de produtos.
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <locale.h>
-#define Max_Caracteres_Produto 20 //Define a quantidade de caracteres que podem ser inseridos na vari·vel.
-#define Max_Caracteres_Descricao 200 //Define a quantidade de caracteres que podem ser inseridos na vari·vel.
+#define Max_Caracteres_Produto 20 //Define a quantidade de caracteres que podem ser inseridos na vari√°vel.
+#define Max_Caracteres_Descricao 200 //Define a quantidade de caracteres que podem ser inseridos na vari√°vel.
 #define Max_Produtos 100 // Define a quantidade de produtos que podem ser inseridos no estoque.
 #define TRUE 1
 #define FALSE 0
 
-int tam = 0; //Vari·vel que conta a quantidade de itens alocados no vetor.
+int tam = 0; //Vari√°vel que conta a quantidade de itens alocados no vetor.
 float maior;
 float menor;
 float media;
-int n = 0; //Conta quantos produtos est„o no arquivo.
-int tam_total = 0; //Quantidade de produtos salvos e n„o salvos no estoque.
+int n = 0; //Conta quantos produtos est√£o no arquivo.
+int tam_total = 0; //Quantidade de produtos salvos e n√£o salvos no estoque.
 int qtd_produtos = 0; //Soma as quantidades de todos os produtos no estoque.
-float somapreco = 0; //Soma os preÁos de todos os produtos no estoque.
+float somapreco = 0; //Soma os pre√ßos de todos os produtos no estoque.
 int excluiu;
-int qtd_relatorio = 0; //Conta quantos produtos aparecem no relatÛrio.
+int qtd_relatorio = 0; //Conta quantos produtos aparecem no relat√≥rio.
 int excluido[Max_Produtos];
-int transformar = 1; //Vari·vel que permite transformar os itens no arquivo em itens ativos.
-int vazio; //Verifica se o estoque est· vazio.
-int salvou_saiu = 0; //Verifica se a opÁ„o de salvar ao sair foi selecionada.
-int alteracao = 0; //Verifica se foi realizada alguma alteraÁ„o no estoque durante a seÁ„o.
+int transformar = 1; //Vari√°vel que permite transformar os itens no arquivo em itens ativos.
+int vazio; //Verifica se o estoque est√° vazio.
+int salvou_saiu = 0; //Verifica se a op√ß√£o de salvar ao sair foi selecionada.
+int alteracao = 0; //Verifica se foi realizada alguma altera√ß√£o no estoque durante a se√ß√£o.
 int ordenado = 0; //Verifica se o comando ordenar produtos foi selecionado.
 int ordenado_codigo[Max_Produtos];
 int ordenado_quantidade[Max_Produtos];
 float ordenado_preco[Max_Produtos];
 int ordenado_ativo[Max_Produtos];
 
-//Declarando as funÁıes para evitar Warnings do tipo "implicit function".
+//Declarando as fun√ß√µes para evitar Warnings do tipo "implicit function".
 void leitura_dados();
 void estatistica();
 void gravar();
@@ -46,11 +46,11 @@ int main();
 //Estrutura dos produtos da Estoque.
 struct TEstoque {
     char produto[Max_Caracteres_Produto]; //Armazena os nomes dos produtos, com uma capacidade de 20 caracteres para cada nome.
-    char descricao[Max_Caracteres_Descricao]; //Armazena as descriÁıes dos produtos, com uma capacidade de 200 caracteres para cada descriÁ„o.
-    float preco; //Armazena o preÁo dos produtos.
+    char descricao[Max_Caracteres_Descricao]; //Armazena as descri√ß√µes dos produtos, com uma capacidade de 200 caracteres para cada descri√ß√£o.
+    float preco; //Armazena o pre√ßo dos produtos.
     int quantidade; //Armazena as quantidades de produtos no estoque.
-    int codigo; //Armazena os cÛdigos dos produtos.
-    int ativo; //Define se os produtos ser„o ativos = TRUE ou inativos = FALSE no estoque.
+    int codigo; //Armazena os c√≥digos dos produtos.
+    int ativo; //Define se os produtos ser√£o ativos = TRUE ou inativos = FALSE no estoque.
 } Estoque[Max_Produtos];
 
 //Estrutura dos produtos ordenados.
@@ -59,7 +59,7 @@ struct TOrdenado{
     char descricao[Max_Produtos];
 } Ordenado[Max_Produtos];
 
-//FunÁ„o para ler os dados salvos no arquivo.
+//Fun√ß√£o para ler os dados salvos no arquivo.
 void leitura_dados(){
     FILE *dados;
     dados = fopen("dados.txt", "r");
@@ -70,14 +70,14 @@ void leitura_dados(){
     float preco_arq;
     int contador = 0;
 
-    n = 0;  //zera a contagem do que est· salvo no arquivo para n„o acumular sempre que o menu for acessado.
+    n = 0;  //zera a contagem do que est√° salvo no arquivo para n√£o acumular sempre que o menu for acessado.
 
     if(dados == NULL){
         vazio = 0;
     }
 
     if(dados != NULL){
-        //Enquanto n„o chegar ao fim do arquivo executa.
+        //Enquanto n√£o chegar ao fim do arquivo executa.
         while((fgetc(dados)) != EOF){
             while(fgetc(dados) != '|'){
                 fscanf(dados, "%05d", &cod_arq);
@@ -86,7 +86,7 @@ void leitura_dados(){
 
             while(fgetc(dados) != '|'){
                 fscanf(dados, "%[^|]s", prod_arq);
-                strcpy(Estoque[contador].produto, prod_arq); //LÍ a string armazenada no vetor e copia para a struct.
+                strcpy(Estoque[contador].produto, prod_arq); //L√™ a string armazenada no vetor e copia para a struct.
             }
 
             while(fgetc(dados) != '|'){
@@ -116,36 +116,36 @@ void leitura_dados(){
     fclose(dados);
 }
 
-//FunÁ„o que calcula quantos produtos existem no estoque, qual o maior, menor e a mÈdia de preÁos dos produtos.
+//Fun√ß√£o que calcula quantos produtos existem no estoque, qual o maior, menor e a m√©dia de pre√ßos dos produtos.
 void estatistica(){
     int a = 0;
 
     printf("\n******************************\n");
-    printf("*   BALAN«O E ESTATÕSTICAS   *\n");
+    printf("*   BALAN√áO E ESTAT√çSTICAS   *\n");
     printf("******************************\n");
     printf("\nQuantidade de produtos em estoque: %d\n", qtd_produtos);
-    printf("Maior preÁo: R$ %0.2f\n", maior);
-    printf("Menor preÁo: R$ %0.2f\n", menor);
+    printf("Maior pre√ßo: R$ %0.2f\n", maior);
+    printf("Menor pre√ßo: R$ %0.2f\n", menor);
 
     media = somapreco/qtd_relatorio;
 
     if(tam_total == 0){
-        printf("MÈdia de preÁos: R$ %0.2f\n", 0);
+        printf("M√©dia de pre√ßos: R$ %0.2f\n", 0);
     }
     else {
-        printf("MÈdia de preÁos: R$ %0.2f\n", media);
+        printf("M√©dia de pre√ßos: R$ %0.2f\n", media);
     }
     printf("\n******************************\n");
 }
 
-//FunÁ„o respons·vel por gerar o arquivo dos produtos no estoque.
+//Fun√ß√£o respons√°vel por gerar o arquivo dos produtos no estoque.
 void gravar(){
     FILE *dados;
     dados = fopen("dados.txt", "w");
 
     int i;
 
-    tam_total = n + tam; //soma a quantidade de produtos salvos em arquivo com a quantidade inserida durante a seÁ„o.
+    tam_total = n + tam; //soma a quantidade de produtos salvos em arquivo com a quantidade inserida durante a se√ß√£o.
     alteracao = 0;
 
     //Salva os produtos cadastrados no arquivo.
@@ -160,15 +160,15 @@ void gravar(){
     if(salvou_saiu == 0){
         system("cls");
         printf("\n************************************\n");
-        printf("*  ALTERA«’ES SALVAS COM SUCESSO!  *\n");
+        printf("*  ALTERA√á√ïES SALVAS COM SUCESSO!  *\n");
         printf("************************************\n");
         system("pause");
-        tam = 0; //Necess·rio para dar inicio a um novo vetor de produtos, visto que o primeiro j· foi salvo e pode ser zerado.
+        tam = 0; //Necess√°rio para dar inicio a um novo vetor de produtos, visto que o primeiro j√° foi salvo e pode ser zerado.
         main();
     }else{
         system("cls");
         printf("\n************************************\n");
-        printf("*  ALTERA«’ES SALVAS COM SUCESSO!  *\n");
+        printf("*  ALTERA√á√ïES SALVAS COM SUCESSO!  *\n");
         printf("************************************\n");
         printf("\n  ******************************\n");
         printf("  * O PROGRAMA FOI FINALIZADO  *\n");
@@ -177,14 +177,14 @@ void gravar(){
     }
 }
 
-//FunÁ„o para gerar relatÛrio e estatÌsticas do estoque.
+//Fun√ß√£o para gerar relat√≥rio e estat√≠sticas do estoque.
 void relatorio(void){
     system("cls");
 
     int a = 0;
-    vazio = 0; // Zera para n„o acumular durante a seÁ„o.
-    qtd_relatorio = 0; //Zera para n„o acumular durante a seÁ„o.
-    qtd_produtos = 0; //Zera para n„o acumular durante a seÁ„o.
+    vazio = 0; // Zera para n√£o acumular durante a se√ß√£o.
+    qtd_relatorio = 0; //Zera para n√£o acumular durante a se√ß√£o.
+    qtd_produtos = 0; //Zera para n√£o acumular durante a se√ß√£o.
     somapreco = 0;
 
     printf("\n******************************\n");
@@ -198,24 +198,24 @@ void relatorio(void){
 
     if(ordenado == 0){
         for(int i = 0; i < tam_total; i++){
-        //CondiÁ„o que lista somente os produtos ativos no estoque.
+        //Condi√ß√£o que lista somente os produtos ativos no estoque.
             if(Estoque[i].ativo == TRUE){
-                printf("\nCÛdigo: %05d\n", Estoque[i].codigo);
+                printf("\nC√≥digo: %05d\n", Estoque[i].codigo);
                 printf("Produto: %s\n", Estoque[i].produto);
-                printf("DescriÁ„o: %s\n", Estoque[i].descricao);
+                printf("Descri√ß√£o: %s\n", Estoque[i].descricao);
                 printf("Quantidade: %d un.\n", Estoque[i].quantidade);
-                printf("PreÁo: R$ %0.2f\n", Estoque[i].preco);
+                printf("Pre√ßo: R$ %0.2f\n", Estoque[i].preco);
                 printf("\n-------------------------------------------\n");
                 qtd_relatorio++;
                 qtd_produtos = qtd_produtos + Estoque[i].quantidade; //Soma as quantidades de cada produto.
-                somapreco = somapreco + Estoque[i].preco; //Soma os preÁos de cada produto.
-                vazio++; //Verifica se o estoque est· vazio.
+                somapreco = somapreco + Estoque[i].preco; //Soma os pre√ßos de cada produto.
+                vazio++; //Verifica se o estoque est√° vazio.
 
-                //Compara iniciando pelo produto na posiÁ„o zero e aloca o de maior valor na vari·vel maior.
+                //Compara iniciando pelo produto na posi√ß√£o zero e aloca o de maior valor na vari√°vel maior.
                 if(Estoque[i].preco > maior){
                         maior = Estoque[i].preco;
                 }
-                //Compara iniciando pelo produto na posiÁ„o zero e aloca o de menor valor na vari·vel menor.
+                //Compara iniciando pelo produto na posi√ß√£o zero e aloca o de menor valor na vari√°vel menor.
                 if(Estoque[i].preco < menor){
                     menor = Estoque[i].preco;
                 }
@@ -227,63 +227,63 @@ void relatorio(void){
         menor = ordenado_preco[0];
 
         for(int i = 0; i < tam_total; i++){
-        //CondiÁ„o que lista somente os produtos ativos no estoque.
+        //Condi√ß√£o que lista somente os produtos ativos no estoque.
             if(ordenado_ativo[i] == TRUE){
-                printf("\nCÛdigo: %05d\n", ordenado_codigo[i]);
+                printf("\nC√≥digo: %05d\n", ordenado_codigo[i]);
                 printf("Produto: %s\n", Ordenado[i].produto);
-                printf("DescriÁ„o: %s\n", Ordenado[i].descricao);
+                printf("Descri√ß√£o: %s\n", Ordenado[i].descricao);
                 printf("Quantidade: %d un.\n", ordenado_quantidade[i]);
-                printf("PreÁo: R$ %0.2f\n", ordenado_preco[i]);
+                printf("Pre√ßo: R$ %0.2f\n", ordenado_preco[i]);
                 printf("\n-------------------------------------------\n");
                 qtd_relatorio++;
                 qtd_produtos = qtd_produtos + ordenado_quantidade[i]; //Soma as quantidades de cada produto.
-                somapreco = somapreco + ordenado_preco[i]; //Soma os preÁos de cada produto.
-                vazio++; //Verifica se o estoque est· vazio.
+                somapreco = somapreco + ordenado_preco[i]; //Soma os pre√ßos de cada produto.
+                vazio++; //Verifica se o estoque est√° vazio.
 
-                //Compara iniciando pelo produto na posiÁ„o zero e aloca o de maior valor na vari·vel maior.
+                //Compara iniciando pelo produto na posi√ß√£o zero e aloca o de maior valor na vari√°vel maior.
                 if(ordenado_preco[i] > maior){
                         maior = ordenado_preco[i];
                 }
-                //Compara iniciando pelo produto na posiÁ„o zero e aloca o de menor valor na vari·vel menor.
+                //Compara iniciando pelo produto na posi√ß√£o zero e aloca o de menor valor na vari√°vel menor.
                 if(ordenado_preco[i] < menor){
                     menor = ordenado_preco[i];
                 }
             }
         }
-        ordenado = 0; //retorna ‡ ordem original.
+        ordenado = 0; //retorna √† ordem original.
     }
 
     if(vazio == 0){
-        printf("\nN„o h· nenhum produto no estoque.\n");
+        printf("\nN√£o h√° nenhum produto no estoque.\n");
         printf("\n-------------------------------------------\n");
 
         printf("\n1 - Voltar\n");
         scanf("%d", &a);
 
-        //Loop necess·rio para reconhecer quando um comando inv·lido È digitado e avisar o usu·rio.
+        //Loop necess√°rio para reconhecer quando um comando inv√°lido √© digitado e avisar o usu√°rio.
         while(a != 1){
-            printf("\nVocÍ digitou um comando inv·lido, favor digitar 1 para voltar.\n");
+            printf("\nVoc√™ digitou um comando inv√°lido, favor digitar 1 para voltar.\n");
             scanf("%d", &a);
         }
 
-        //CondiÁ„o para voltar ao menu.
+        //Condi√ß√£o para voltar ao menu.
         if(a == 1){
             main();
         }
     }else{
         estatistica();
 
-        printf("\n1 - Ordenar por CÛdigo");
+        printf("\n1 - Ordenar por C√≥digo");
         printf("\n2 - Voltar\n");
         scanf("%d", &a);
 
-        //Loop necess·rio para reconhecer quando um comando inv·lido È digitado e avisar o usu·rio.
+        //Loop necess√°rio para reconhecer quando um comando inv√°lido √© digitado e avisar o usu√°rio.
         while(a != 1 && a != 2){
-            printf("\nVocÍ digitou um comando inv·lido, favor digitar 1 para voltar.\n");
+            printf("\nVoc√™ digitou um comando inv√°lido, favor digitar 1 para voltar.\n");
             scanf("%d", &a);
         }
 
-        //CondiÁ„o para voltar ao menu.
+        //Condi√ß√£o para voltar ao menu.
         if(a == 1){
            ordenar();
         } else if (a == 2){
@@ -292,13 +292,13 @@ void relatorio(void){
     }
 }
 
-//FunÁ„o para cadastrar produtos no estoque.
+//Fun√ß√£o para cadastrar produtos no estoque.
 void cadastro(void){
     int i = 0;
     int j = 0;
-    int a = 0; //vari·vel que determina a opÁ„o ‡ ser selecionada.
-    j = j + tam; //respons·vel por dar continuidade na ordem dos itens mesmo quando sair e voltar para a funÁ„o cadastro.
-    j = j + n; //soma o tamanho dos itens n„o salvos (j) com os salvos (n).
+    int a = 0; //vari√°vel que determina a op√ß√£o √† ser selecionada.
+    j = j + tam; //respons√°vel por dar continuidade na ordem dos itens mesmo quando sair e voltar para a fun√ß√£o cadastro.
+    j = j + n; //soma o tamanho dos itens n√£o salvos (j) com os salvos (n).
 
     do {
         system("cls"); //limpa a tela;
@@ -309,18 +309,18 @@ void cadastro(void){
         printf("*         CADASTRO           *\n");
         printf("******************************\n");
 
-        printf("\nCÛdigo: ");
+        printf("\nC√≥digo: ");
         scanf("%05d", &Estoque[j].codigo);
         fflush(stdin);
 
-        //LaÁo para verificar se o cÛdigo registrado j· existe.
+        //La√ßo para verificar se o c√≥digo registrado j√° existe.
         for(i = 0; i < tam_total; i++){
-            //Garante que a comparaÁ„o sÛ ser· realizada com produtos ativos.
+            //Garante que a compara√ß√£o s√≥ ser√° realizada com produtos ativos.
             if(Estoque[i].ativo == TRUE){
-                //Realiza a comparaÁ„o com todos os produtos no estoque.
+                //Realiza a compara√ß√£o com todos os produtos no estoque.
                 while(Estoque[j].codigo == Estoque[i].codigo){
-                    printf("\nO cÛdigo digitado j· est· em uso.\n");
-                    printf("Digite um novo cÛdigo: ");
+                    printf("\nO c√≥digo digitado j√° est√° em uso.\n");
+                    printf("Digite um novo c√≥digo: ");
                     scanf("%05d", &Estoque[j].codigo);
                     fflush(stdin);
                     printf("\n");
@@ -332,16 +332,16 @@ void cadastro(void){
         printf("Produto: ");
         gets(Estoque[j].produto);
 
-        printf("DescriÁ„o: ");
+        printf("Descri√ß√£o: ");
         gets(Estoque[j].descricao);
 
         printf("Quantidade no estoque: ");
         scanf("%d", &Estoque[j].quantidade);
 
-        printf("PreÁo: R$ ");
+        printf("Pre√ßo: R$ ");
         scanf("%f", &Estoque[j].preco);
 
-        Estoque[j].ativo = TRUE; //Determina que estes produtos estar„o ativos no estoque.
+        Estoque[j].ativo = TRUE; //Determina que estes produtos estar√£o ativos no estoque.
 
         printf("\nProduto cadastrado.\n");
         printf("\n1 - Cadastrar novo Produto");
@@ -356,13 +356,13 @@ void cadastro(void){
         n++;
     } while(a == 1);
 
-    //Loop necess·rio para reconhecer quando um comando inv·lido È digitado e avisar o usu·rio.
+    //Loop necess√°rio para reconhecer quando um comando inv√°lido √© digitado e avisar o usu√°rio.
     while(a != 1 && a != 2){
-        printf("\nVocÍ digitou um comando inv·lido, favor digitar 1 ou 2.\n");
+        printf("\nVoc√™ digitou um comando inv√°lido, favor digitar 1 ou 2.\n");
         scanf("%d", &a);
     }
 
-    //OpÁıes apresentadas ao usu·rio apÛs o cadastro. Voltar ao menu ou continuar cadastrando produtos.
+    //Op√ß√µes apresentadas ao usu√°rio ap√≥s o cadastro. Voltar ao menu ou continuar cadastrando produtos.
     if(a == 1){
         cadastro();
     } else if (a == 2){
@@ -370,7 +370,7 @@ void cadastro(void){
     }
 }
 
-//FunÁ„o para excluir produtos do estoque.
+//Fun√ß√£o para excluir produtos do estoque.
 void excluir(void){
     int cod2 = 0;
     int inativo = 0;
@@ -382,40 +382,40 @@ void excluir(void){
     printf("*      EXCLUIR PRODUTO       *\n");
     printf("******************************\n");
 
-    //Verifica quantos produtos est„o inativos no estoque.
+    //Verifica quantos produtos est√£o inativos no estoque.
     for(int i = 0; i < tam_total; i++){
         if(Estoque[i].ativo == FALSE){
             inativo++;
         }
     }
 
-    //Se a quantidade de produtos inativos for igual a quantidade total do estoque, ent„o n„o h· produto algum no estoque.
+    //Se a quantidade de produtos inativos for igual a quantidade total do estoque, ent√£o n√£o h√° produto algum no estoque.
     if(inativo == tam_total){
         printf("\n-------------------------------------------\n");
-        printf("\nN„o h· nenhum produto no estoque.\n");
+        printf("\nN√£o h√° nenhum produto no estoque.\n");
         printf("\n-------------------------------------------\n");
         system("pause");
         excluiu = 0; //Informado que nenhum produto foi excluido.
         main();
     }
 
-    printf("\nDigite o cÛdigo do produto a ser excluido: ");
+    printf("\nDigite o c√≥digo do produto a ser excluido: ");
     scanf("%d", &cod2);
 
-    //Verifica se o cÛdigo digitado corresponde ‡ algum produto no estoque, e ainda, se este È ativo, se for, passa a ser inativo.
+    //Verifica se o c√≥digo digitado corresponde √† algum produto no estoque, e ainda, se este √© ativo, se for, passa a ser inativo.
     for(int i = 0; i < tam_total; i++){
         if(Estoque[i].codigo == cod2 && Estoque[i].ativo == TRUE){
             Estoque[i].ativo = FALSE;
             excluido[i] = Estoque[i].codigo;
             excluiu = 1; //Informa ao sistema que um produto foi excluido.
-            alteracao++; //Informa ao sistema que ocorreu uma alteraÁ„o no estoque.
+            alteracao++; //Informa ao sistema que ocorreu uma altera√ß√£o no estoque.
         }
     }
 
-    //Verifica se existe algum produto ativo no relatÛrio.
+    //Verifica se existe algum produto ativo no relat√≥rio.
     if(vazio == 0 && tam_total == 0){
         printf("\n-------------------------------------------\n");
-        printf("\nN„o h· nenhum produto no estoque.\n");
+        printf("\nN√£o h√° nenhum produto no estoque.\n");
         printf("\n-------------------------------------------\n");
         system("pause");
         main();
@@ -424,14 +424,14 @@ void excluir(void){
     //Verifica se um produto foi excluido.
     if(excluiu == 1){
         printf("\n-------------------------------------------\n");
-        printf("\nO produto %03d foi excluÌdo com sucesso.\n", cod2);
+        printf("\nO produto %03d foi exclu√≠do com sucesso.\n", cod2);
         printf("\n-------------------------------------------\n");
         printf("\n1 - Continuar\n2 - Voltar para o menu.\n");
         excluiu = 0;
         alteracao++;
     }else if(excluiu == 0 || vazio == 0){
         printf("\n-------------------------------------------\n");
-        printf("\nO produto buscado n„o consta no estoque.\n");
+        printf("\nO produto buscado n√£o consta no estoque.\n");
         printf("\n-------------------------------------------\n");
         printf("\n1 - Continuar\n2 - Voltar para o menu.\n");
     }
@@ -444,9 +444,9 @@ void excluir(void){
         excluir();
     }
 
-    //Loop necess·rio para reconhecer quando um comando inv·lido È digitado e avisar o usu·rio.
+    //Loop necess√°rio para reconhecer quando um comando inv√°lido √© digitado e avisar o usu√°rio.
     while(a != 1 && a != 2){
-        printf("\nVocÍ digitou um comando inv·lido, favor digitar 1 ou 2.\n");
+        printf("\nVoc√™ digitou um comando inv√°lido, favor digitar 1 ou 2.\n");
         scanf("%d", &a);
     }
 
@@ -454,7 +454,7 @@ void excluir(void){
     main();
 }
 
-//FunÁ„o para buscar um produto no estoque.
+//Fun√ß√£o para buscar um produto no estoque.
 void buscar(void){
     system("cls"); //limpa a tela;
 
@@ -468,36 +468,36 @@ void buscar(void){
     printf("*     BUSCAR NO ESTOQUE      *\n");
     printf("******************************\n");
 
-    //Verifica quantos produtos est„o inativos no estoque.
+    //Verifica quantos produtos est√£o inativos no estoque.
     for(int i = 0; i < tam_total; i++){
         if(Estoque[i].ativo == FALSE){
             inativo++;
         }
     }
 
-    //Se a quantidade de produtos inativos for igual a quantidade total do estoque, ent„o n„o h· produto algum no estoque.
+    //Se a quantidade de produtos inativos for igual a quantidade total do estoque, ent√£o n√£o h√° produto algum no estoque.
     if(inativo == tam_total){
         printf("\n-------------------------------------------\n");
-        printf("\nN„o h· nenhum produto no estoque.\n");
+        printf("\nN√£o h√° nenhum produto no estoque.\n");
         printf("\n-------------------------------------------\n");
         system("pause");
         excluiu = 0;
         main();
     }
 
-    printf("\nDigite o cÛdigo do produto que vocÍ est· procurando: ");
+    printf("\nDigite o c√≥digo do produto que voc√™ est√° procurando: ");
     scanf("%05d", &busca_codigo);
 
-    //Verifica se a busca digitada È igual ao cÛdigo de algum produto ativo no estoque.
+    //Verifica se a busca digitada √© igual ao c√≥digo de algum produto ativo no estoque.
     for(int i = 0; i < tam_total; i++){
         if(Estoque[i].ativo == TRUE){
             if(Estoque[i].codigo == busca_codigo){
                 printf("\n-------------------------------------------\n");
-                printf("\nCÛdigo: %05d\n", Estoque[i].codigo);
+                printf("\nC√≥digo: %05d\n", Estoque[i].codigo);
                 printf("Produto: %s", Estoque[i].produto);
-                printf("\nDescriÁ„o: %s", Estoque[i].descricao);
+                printf("\nDescri√ß√£o: %s", Estoque[i].descricao);
                 printf("\nQuantidade: %d\n", Estoque[i].quantidade);
-                printf("PreÁo: %0.2f\n", Estoque[i].preco);
+                printf("Pre√ßo: %0.2f\n", Estoque[i].preco);
                 printf("\n-------------------------------------------\n");
                 break;
             }
@@ -505,10 +505,10 @@ void buscar(void){
         }
     }
 
-    //Verifica se o laÁo passou por todos os produtos no estoque, caso tenha, a busca realizada n„o tem correspondÍncia.
+    //Verifica se o la√ßo passou por todos os produtos no estoque, caso tenha, a busca realizada n√£o tem correspond√™ncia.
     if(count == tam_total){
         printf("\n-------------------------------------------\n");
-        printf("\nO cÛdigo inserido n„o corresponde ‡ nenhum produto do estoque.\n");
+        printf("\nO c√≥digo inserido n√£o corresponde √† nenhum produto do estoque.\n");
         printf("\n-------------------------------------------\n");
     }
 
@@ -516,13 +516,13 @@ void buscar(void){
     printf("\n2 - Voltar\n");
     scanf("%d", &a);
 
-    //Loop necess·rio para reconhecer quando um comando inv·lido È digitado e avisar o usu·rio.
+    //Loop necess√°rio para reconhecer quando um comando inv√°lido √© digitado e avisar o usu√°rio.
     while(a != 1 && a != 2){
-        printf("\nVocÍ digitou um comando inv·lido, favor digitar 1 ou 2.\n");
+        printf("\nVoc√™ digitou um comando inv√°lido, favor digitar 1 ou 2.\n");
         scanf("%d", &a);
     }
 
-    //CondiÁıes para voltar ao menu ou continuar procurando.
+    //Condi√ß√µes para voltar ao menu ou continuar procurando.
     if(a == 1){
         buscar();
     } else if (a == 2){
@@ -530,18 +530,18 @@ void buscar(void){
     }
 }
 
-//FunÁ„o para deixar em ordem os produtos do estoque.
+//Fun√ß√£o para deixar em ordem os produtos do estoque.
 void ordenar(void){
     int c = 0;
 
     for(int i = 0; i < tam_total; i++){
         for(int j = 0; j < tam_total; j++){
-            //Conta quantas vezes o Estoque[i].codigo È maior do que o comparado, o resultado desta contagem ser· sua posiÁ„o.
+            //Conta quantas vezes o Estoque[i].codigo √© maior do que o comparado, o resultado desta contagem ser√° sua posi√ß√£o.
             if(Estoque[i].codigo > Estoque[j].codigo){
                 c++;
             }
         }
-        //Armazena nos vetores criados na posiÁ„o contada os dados da Estoque.
+        //Armazena nos vetores criados na posi√ß√£o contada os dados da Estoque.
         ordenado_codigo[c] = Estoque[i].codigo;
         strcpy(Ordenado[c].produto, Estoque[i].produto);
         strcpy(Ordenado[c].descricao, Estoque[i].descricao);
@@ -551,11 +551,11 @@ void ordenar(void){
         c = 0;
     }
 
-    ordenado = 1; //Indica que a opÁ„o de ordenar os itens foi selecionada.
+    ordenado = 1; //Indica que a op√ß√£o de ordenar os itens foi selecionada.
     relatorio();
 }
 
-//FunÁ„o para excluir o estoque.
+//Fun√ß√£o para excluir o estoque.
 void deletar(void){
     int a=0;
 
@@ -569,7 +569,7 @@ void deletar(void){
 
     if(vazio == 0){
             printf("\n-------------------------------------------\n");
-            printf("\nN„o h· nenhum produto no estoque.\n");
+            printf("\nN√£o h√° nenhum produto no estoque.\n");
             printf("\n-------------------------------------------\n");
             system("pause");
             main();
@@ -577,7 +577,7 @@ void deletar(void){
 
     printf("\nTem certeza de que deseja deletar o estoque atual?\n");
     printf("\n1- Sim");
-    printf("\n2- N„o\n");
+    printf("\n2- N√£o\n");
     scanf("%d", &a);
 
     if (a == 2){
@@ -585,28 +585,28 @@ void deletar(void){
     } else if (a == 1){
         for(int i = 0; i < tam_total; i++){
             Estoque[i].ativo = FALSE;
-            excluiu = 1; //Informa ao sistema que um produto foi excluido mas ainda n„o foi salvo.
+            excluiu = 1; //Informa ao sistema que um produto foi excluido mas ainda n√£o foi salvo.
         }
         system("cls");
-        alteracao = 1; //Informa ao sistema que foi feita uma alteraÁ„o no estoque.
+        alteracao = 1; //Informa ao sistema que foi feita uma altera√ß√£o no estoque.
         printf("\n******************************\n");
         printf("*     EXCLUIR O ESTOQUE      *\n");
         printf("******************************\n");
         printf("\n-------------------------------------------\n");
-        printf("\nEstoque excluÌdo com sucesso!\n");
+        printf("\nEstoque exclu√≠do com sucesso!\n");
         printf("\n-------------------------------------------\n");
         system("pause");
         main();
     }
 
-    //Loop necess·rio para reconhecer quando um comando inv·lido È digitado e avisar o usu·rio.
+    //Loop necess√°rio para reconhecer quando um comando inv√°lido √© digitado e avisar o usu√°rio.
     while(a != 1 && a != 2){
-        printf("\nVocÍ digitou um comando inv·lido, favor digitar 1 ou 2.\n");
+        printf("\nVoc√™ digitou um comando inv√°lido, favor digitar 1 ou 2.\n");
         scanf("%d", &a);
     }
 }
 
-//FunÁ„o para sair do programa.
+//Fun√ß√£o para sair do programa.
 void sair(void){
     int a = 0;
     tam_total = n + tam;
@@ -618,9 +618,9 @@ void sair(void){
         printf("\n**************************\n");
         printf("*        SAINDO...       *\n");
         printf("**************************\n");
-        printf("\nDeseja salvar as alteraÁıes realizadas?\n");
+        printf("\nDeseja salvar as altera√ß√µes realizadas?\n");
         printf("\n1 - Sim\n");
-        printf("2 - N„o\n");
+        printf("2 - N√£o\n");
         scanf("%d", &a);
 
         if (a == 2){
@@ -635,9 +635,9 @@ void sair(void){
             gravar();
         }
 
-        //Loop necess·rio para reconhecer quando um comando inv·lido È digitado e avisar o usu·rio.
+        //Loop necess√°rio para reconhecer quando um comando inv√°lido √© digitado e avisar o usu√°rio.
         while(a != 1 && a != 2){
-            printf("\nVocÍ digitou um comando inv·lido, favor digitar 1 ou 2.\n");
+            printf("\nVoc√™ digitou um comando inv√°lido, favor digitar 1 ou 2.\n");
             scanf("%d", &a);
         }
     }else{
@@ -650,7 +650,7 @@ void sair(void){
 
 //Menu.
 int main(){
-    setlocale(LC_ALL, "Portuguese"); //Permite acentos e Á nas strings.
+    setlocale(LC_ALL, "Portuguese"); //Permite acentos e √ß nas strings.
     system("cls"); //Limpa a tela.
 
     int opcao;
@@ -663,7 +663,7 @@ int main(){
     printf("*************************\n");
 
     printf("\n1 - Buscar Produto\n");
-    printf("2 - Gerar RelatÛrio do Estoque\n");
+    printf("2 - Gerar Relat√≥rio do Estoque\n");
     printf("3 - Cadastrar Produto\n");
     printf("4 - Excluir Produto\n");
     printf("5 - Excluir Estoque\n");
@@ -672,9 +672,9 @@ int main(){
 
     scanf("%d", &opcao);
 
-    //Loop necess·rio para reconhecer quando um comando inv·lido È digitado e avisar o usu·rio.
+    //Loop necess√°rio para reconhecer quando um comando inv√°lido √© digitado e avisar o usu√°rio.
     while(opcao > 7){
-        printf("\nVocÍ digitou um comando inv·lido, favor escolher uma das opÁıes acima.\n");
+        printf("\nVoc√™ digitou um comando inv√°lido, favor escolher uma das op√ß√µes acima.\n");
         scanf("%d", &opcao);
     }
 
@@ -686,7 +686,7 @@ int main(){
             relatorio();
             break;
         case 3:
-            n = 0; //Zera a contagem de produtos no arquivo para evitar ac˙mulo.
+            n = 0; //Zera a contagem de produtos no arquivo para evitar ac√∫mulo.
             leitura_dados(); //Conta os produtos salvos.
             cadastro();
             break;
